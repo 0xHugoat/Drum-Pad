@@ -1,12 +1,18 @@
-const keys = document.querySelectorAll(".key");
-const audio = document.querySelectorAll("audio");
-
-function playSounds(e) {
-    e.key.toUpperCase().charCodeAt();
-    console.log(e.key.toUpperCase().charCodeAt());
-     const sound = document.querySelector(`audio[data-key="${e.key.toUpperCase().charCodeAt()}"]`);
-     sound.play()
-
+function playSound(keyCode) {
+  let audio = document.querySelector('audio[data-key="' + keyCode + '"]')
+  audio.play()
+  let key = document.querySelector('div[data-key="' + keyCode + '"]')
+  key.classList.add("playing")
 }
 
-document.addEventListener("keydown", playSounds)
+window.addEventListener("keydown", (e) => {
+  playSound(e.keyCode)
+})
+
+let keys = document.querySelectorAll(".key")
+
+for (const key of keys) {
+  key.addEventListener("transitionend", (e) => {
+    key.classList.remove("playing")
+  })
+}
